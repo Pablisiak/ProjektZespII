@@ -1,10 +1,13 @@
 **Projekt zesp. II**
 
 *Opis:*
-x
+Gra typu bullet heven
 
 *Technologie:*
-x
+Unity, C#
 
 *Autorzy:*
-x
+Michał Spychalski
+Igor Różanowski
+Szymon Rybacki
+Paweł Strużyński
