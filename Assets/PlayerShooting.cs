@@ -6,6 +6,8 @@ public class PlayerShooting : MonoBehaviour
     public float bulletSpeed = 10f;
     public Transform firePoint;
 
+    public Player Player;
+
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
@@ -22,5 +24,7 @@ public class PlayerShooting : MonoBehaviour
         GameObject bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
         rb.velocity = direction * bulletSpeed;
+
+        bullet.GetComponent<Bullet>().damage = Player.Wepon.DMG(Player.Stats);
     }
 }
