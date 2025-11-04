@@ -6,10 +6,14 @@ using UnityEngine;
 public class Weapon : ScriptableObject
 {
     public float BasicDamage;
+    public float FireRate;
+    public float CritDamage;
 
     public virtual int DMG(Stats stats)
     {
-        float dmg = BasicDamage * ((stats.Attack + 100) / 100);
+        float dmg = BasicDamage * ((float)(stats.Attack + 100) / 100);
+        Debug.Log(stats.Attack);
+        Debug.Log(dmg);
         return (int)dmg;
     }
 

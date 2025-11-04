@@ -13,3 +13,5 @@ MonoBehaviour:
   m_Name: BasicWepon
   m_EditorClassIdentifier: 
   BasicDamage: 40
+  FireRate: 0.25
+  CritDamage: 2

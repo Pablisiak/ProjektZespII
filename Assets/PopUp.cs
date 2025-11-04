@@ -11,4 +11,9 @@ public class PopUp : MonoBehaviour
     {
         Health.text = tekst;
     }
+
+    public void SetColor(Color kolor)
+    {
+        Health.color = kolor;
+    }
 }

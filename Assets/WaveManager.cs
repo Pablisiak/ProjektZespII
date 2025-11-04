@@ -41,6 +41,11 @@ public class WaveManager : MonoBehaviour
         StartNextWave();
     }
 
+    public void GiveKaska()
+    {
+        Players.players.PlayersList[0].GetComponent<Player>().Money += Players.players.PlayersList[0].GetComponent<Player>().Stats.Harveresting;
+    }
+
     public void StartNextWave()
     {
         if (isWaveActive) return;
@@ -57,46 +62,47 @@ public class WaveManager : MonoBehaviour
         StartCoroutine(HandleWave(waves[currentWaveIndex]));
     }
 
-    IEnumerator HandleWave(Wave wave)
+  IEnumerator HandleWave(Wave wave)
     {
         isWaveActive = true;
         shopUI.SetActive(false);
 
+        // oblicz łączną liczbę przeciwników
         int totalEnemies = 0;
         foreach (var type in wave.enemies)
             totalEnemies += type.count;
 
-        float elapsedTime = 0f;
-        float timeStep = 1f; // spawn co sekundę
+        float spawnInterval = wave.duration / totalEnemies; // odstęp czasu między spawnami
         Dictionary<GameObject, int> remainingByType = new Dictionary<GameObject, int>();
         foreach (var type in wave.enemies)
             remainingByType[type.enemyPrefab] = type.count;
+
+        float elapsedTime = 0f;
 
         while (elapsedTime < wave.duration)
         {
             if (waveUI != null)
                 waveUI.UpdateWaveTimer(wave.duration - elapsedTime);
 
-            // spawn 3 przeciwników co sekundę
-            for (int i = 0; i < 3; i++)
+            GameObject prefab = GetNextAvailablePrefab(remainingByType);
+            if (prefab != null)
             {
-                GameObject prefab = GetNextAvailablePrefab(remainingByType);
-                if (prefab == null) break;
-
                 Vector3 spawnPos = GetRandomSpawnPosition();
-                if (Vector3.Distance(spawnPos, player.position) < minDistanceFromPlayer)
-                    continue;
 
-                GameObject enemy = Instantiate(prefab, spawnPos, Quaternion.identity);
-                activeEnemies.Add(enemy);
-                remainingByType[prefab]--;
+                // upewnij się, że nie pojawi się zbyt blisko gracza
+                if (Vector3.Distance(spawnPos, player.position) >= minDistanceFromPlayer)
+                {
+                    GameObject enemy = Instantiate(prefab, spawnPos, Quaternion.identity);
+                    activeEnemies.Add(enemy);
+                    remainingByType[prefab]--;
+                }
             }
 
-            yield return new WaitForSeconds(timeStep);
-            elapsedTime += timeStep;
+            yield return new WaitForSeconds(spawnInterval);
+            elapsedTime += spawnInterval;
         }
 
-        // Zakończenie fali
+        // koniec fali – usuń pozostałych przeciwników, jeśli trzeba
         foreach (var e in activeEnemies)
         {
             if (e != null) Destroy(e);
@@ -104,12 +110,14 @@ public class WaveManager : MonoBehaviour
         activeEnemies.Clear();
 
         if (waveUI != null)
-            waveUI.UpdateWaveTimer(0); // 👈 Pokazuje "Fala zakończona!"
+            waveUI.UpdateWaveTimer(0);
 
+        GiveKaska();
         isWaveActive = false;
         shopUI.SetActive(true);
         Debug.Log("Fala zakończona — sklep aktywny!");
     }
+
 
     GameObject GetNextAvailablePrefab(Dictionary<GameObject, int> remaining)
     {

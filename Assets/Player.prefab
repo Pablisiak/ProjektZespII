@@ -101,7 +101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56035a0a1fe7df74187e8d3bb3ebfaf7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
+  player: {fileID: 3488548752729756983}
 --- !u!114 &3488548752729756983
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -117,20 +117,21 @@ MonoBehaviour:
   Stats:
     HP: 7
     MaxHP: 7
-    RegenerationHP: 0
+    RegenerationHP: 10
     Attack: 0
     Strength: 0
     Agility: 0
     Magic: 0
     AttackSpeed: 0
-    CritChance: 0
+    CritChance: 50
     Range: 0
     Armor: 0
     Doge: 0
     Speed: 10
     Luck: 0
     Harveresting: 0
-  Wepon: {fileID: 11400000, guid: 01907435e8cf78b47a919488d42e30f9, type: 2}
+  Weapon: {fileID: 11400000, guid: 01907435e8cf78b47a919488d42e30f9, type: 2}
+  Money: 0
 --- !u!114 &7346415034588000158
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -147,6 +148,7 @@ MonoBehaviour:
   bulletSpeed: 10
   firePoint: {fileID: 5208536456556805704}
   Player: {fileID: 3488548752729756983}
+  fireRate: 0.25
 --- !u!50 &6729907677783872220
 Rigidbody2D:
   serializedVersion: 4
@@ -206,7 +208,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -0.41341954}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -217,5 +219,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 2}
+  m_Size: {x: 1, y: 1.1731609}
   m_EdgeRadius: 0

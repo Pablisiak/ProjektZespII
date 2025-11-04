@@ -5,6 +5,7 @@ public class Enemy : MonoBehaviour
     public float speed = 2f;
     public int maxHealth = 100;
     public int damage = 1;
+    public int money = 1;
 
     private int currentHealth;
     private Transform player;
@@ -33,6 +34,8 @@ public class Enemy : MonoBehaviour
 
     void Die()
     {
+        Players.players.PlayersList[0].GetComponent<Player>().Money += money;
+        Debug.Log(money);
         Destroy(gameObject);
     }
 
@@ -40,6 +43,15 @@ public class Enemy : MonoBehaviour
     {
         GameObject NewPop = Instantiate(PrefabMenager.prefabMenager.PopUp, transform.position, Quaternion.identity);
         NewPop.GetComponent<PopUp>().Set(tekst);
+        Destroy(NewPop, 1f);
+    }
+
+    void ShowText(string tekst, Color kolor)
+    {
+        GameObject NewPop = Instantiate(PrefabMenager.prefabMenager.PopUp, transform.position, Quaternion.identity);
+        PopUp pop = NewPop.GetComponent<PopUp>();
+        pop.Set(tekst);
+        pop.SetColor(kolor); 
         Destroy(NewPop, 1f);
     }
 
@@ -57,12 +69,16 @@ public class Enemy : MonoBehaviour
         }
         if (collision.gameObject.CompareTag("Bullet"))
         {
-            Destroy(collision.gameObject);
+            
             int DMG = collision.gameObject.GetComponent<Bullet>().damage;
-            ShowText((DMG).ToString());
+            if(collision.gameObject.GetComponent<Bullet>().crite)
+                ShowText((DMG).ToString(), Color.yellow);
+            else
+                ShowText((DMG).ToString());
+            Destroy(collision.gameObject);
             currentHealth -= DMG;
             if(currentHealth <= 0)
-                Destroy(gameObject);
+                Die();
         }
     }
 }

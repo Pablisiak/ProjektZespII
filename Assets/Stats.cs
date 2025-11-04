@@ -35,7 +35,7 @@ public class Stats
             CritChance = a.CritChance + b.CritChance,
             Range = a.Range + b.Range,
             Armor = a.Armor + b.Armor,
-            Doge = a.Doge + b.Doge,
+            Doge = a.Doge + b.Doge > 60 ? 60 : a.Doge + b.Doge,
             Speed = a.Speed + b.Speed,
             Luck = a.Luck + b.Luck,
             Harveresting = a.Harveresting + b.Harveresting

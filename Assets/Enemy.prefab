@@ -101,7 +101,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 2
   maxHealth: 50
-  damage: 1
+  damage: 4
+  money: 1
 --- !u!50 &6729907677783872220
 Rigidbody2D:
   serializedVersion: 4

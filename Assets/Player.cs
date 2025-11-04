@@ -4,7 +4,8 @@ using System.Collections;
 public class Player : MonoBehaviour
 {
     public Stats Stats;
-    public Weapon Wepon;
+    public Weapon Weapon;
+    public int Money;
 
     void Start()
     {
@@ -14,11 +15,25 @@ public class Player : MonoBehaviour
 
     public void TakeDamage(int amount)
     {
-        ShowText(amount.ToString());
-        Stats.HP -= amount;
-        if (Stats.HP <= 0)
+        int Rng = Random.Range(0,100);
+        if(Rng < Stats.Doge)
         {
-            Debug.Log("Gracz zginął!");
+            ShowText("Doge", Color.white);
+        }
+        else
+        {
+            float dmg = amount;
+            for(int i = 0; i < Stats.Armor; i++)
+            {
+                dmg *= 0.99f;
+            }
+            dmg = (int)dmg;
+            ShowText(dmg.ToString(), Color.red);
+            Stats.HP -= (int)dmg;
+            if (Stats.HP <= 0)
+            {
+                Debug.Log("Gracz zginął!");
+            }
         }
     }
 
@@ -29,17 +44,30 @@ public class Player : MonoBehaviour
         Destroy(NewPop, 1f);
     }
 
+    void ShowText(string tekst, Color kolor)
+    {
+        GameObject NewPop = Instantiate(PrefabMenager.prefabMenager.PopUp, transform.position, Quaternion.identity);
+        PopUp pop = NewPop.GetComponent<PopUp>();
+        pop.Set(tekst);
+        pop.SetColor(kolor); // nowa linia
+        Destroy(NewPop, 1f);
+    }
+
+
 
     IEnumerator Regeneration()
     {
         while (true)
         {
-            Debug.Log("Regeneruję...");
-            if(Stats.MaxHP < Stats.HP)
+            if(Stats.MaxHP > Stats.HP && Stats.RegenerationHP > 0)
             {
+                ShowText("1", Color.green); 
                 Stats.HP++;
             }
-            yield return new WaitForSeconds(10f/Stats.RegenerationHP); 
+
+            float wait =  Stats.RegenerationHP > 0 ? Stats.RegenerationHP : 10;
+
+            yield return new WaitForSeconds(10f/wait); 
         }
     }
 }

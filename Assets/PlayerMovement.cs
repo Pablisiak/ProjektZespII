@@ -2,10 +2,11 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [Header("Ustawienia ruchu")]
-    public float moveSpeed = 5f;             
+    [Header("Ustawienia ruchu")]            
     private Rigidbody2D rb;                  
-    private Vector2 moveInput;               
+    private Vector2 moveInput;      
+
+    public Player player;         
 
     void Start()
     {
@@ -22,6 +23,6 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        rb.MovePosition(rb.position + moveInput * moveSpeed * Time.fixedDeltaTime);
+        rb.MovePosition(rb.position + moveInput * (5 * ((float)(player.Stats.Speed + 100) / 100)) * Time.fixedDeltaTime);
     }
 }

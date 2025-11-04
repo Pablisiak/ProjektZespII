@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class Players : MonoBehaviour
 {
+    public static Players players;
+
     public List<GameObject> PlayersList;
 
-    
+    void Awake()
+    {
+        players = this;
+    }
 }
