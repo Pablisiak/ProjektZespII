@@ -2,7 +2,12 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [Header("Ustawienia ruchu")]            
+    [Header("Ustawienia ruchu")]
+    [SerializeField] private string inputNameHorizontal;
+    [SerializeField] private string inputNameVertical;    
+    private float inputHorizontal;
+    private float inputVertical;
+
     private Rigidbody2D rb;                  
     private Vector2 moveInput;      
 
@@ -15,8 +20,8 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        moveInput.x = Input.GetAxisRaw("Horizontal");
-        moveInput.y = Input.GetAxisRaw("Vertical");
+        moveInput.x = Input.GetAxisRaw(inputNameHorizontal);
+        moveInput.y = Input.GetAxisRaw(inputNameVertical);
 
         moveInput = moveInput.normalized;
     }

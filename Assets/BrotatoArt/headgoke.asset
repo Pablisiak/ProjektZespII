@@ -12,23 +12,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e35d7027348d7744a335aad533d1a70, type: 3}
   m_Name: headgoke
   m_EditorClassIdentifier: 
-  Name: Hedghog
+  Name: OKI47
   Stats:
     HP: 0
     MaxHP: 0
-    RegenerationHP: -1
+    RegenerationHP: 0
     Attack: 0
-    Strength: 2
-    Agility: 1
-    Magic: 0
-    AttackSpeed: 0
+    Strength: 0
+    Agility: 0
+    Magic: -47
+    AttackSpeed: 47
     CritChance: 0
     Range: 0
     Armor: 0
     Doge: 0
-    Speed: 0
+    Speed: 47
     Luck: 0
     Harveresting: 0
-  Cost: 30
+  Cost: 47
   Sprite: {fileID: 21300000, guid: 4f55c22d29f30c0469e06cc5c0d20774, type: 3}
-  Tier: 0
+  Tier: 3
