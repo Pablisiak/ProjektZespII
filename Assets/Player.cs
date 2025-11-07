@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 using System.Collections;
 
 public class Player : MonoBehaviour
@@ -6,6 +7,7 @@ public class Player : MonoBehaviour
     public Stats Stats;
     public Weapon Weapon;
     public int Money;
+    public List<Item> Items;
 
     void Start()
     {

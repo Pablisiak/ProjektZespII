@@ -29,9 +29,10 @@ public class WaveManager : MonoBehaviour
     [Header("UI")]
     public WaveUI waveUI;
 
-    private int currentWaveIndex = -1;
+    public static int currentWaveIndex = -1;
     private bool isWaveActive = false;
     private List<GameObject> activeEnemies = new List<GameObject>();
+    public ShopMenager ShopMenager;
 
     void Start()
     {
@@ -111,10 +112,11 @@ public class WaveManager : MonoBehaviour
 
         if (waveUI != null)
             waveUI.UpdateWaveTimer(0);
-
+        
         GiveKaska();
         isWaveActive = false;
         shopUI.SetActive(true);
+        ShopMenager.Roll();
         Debug.Log("Fala zakończona — sklep aktywny!");
     }
 

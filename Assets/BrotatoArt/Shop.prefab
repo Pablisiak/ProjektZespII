@@ -98,6 +98,8 @@ MonoBehaviour:
   Descript: {fileID: 4677157908150571970}
   Art: {fileID: 6844046694047471134}
   Rare: {fileID: 6401297652314603851}
+  Tier: 0
+  ShopManager: {fileID: 0}
 --- !u!1 &650420277278654182
 GameObject:
   m_ObjectHideFlags: 0
@@ -294,7 +296,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6792960705275478923}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3903983199729221519}
+        m_TargetAssemblyTypeName: Shop, Assembly-CSharp
+        m_MethodName: Buy
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1170257517609404404
 GameObject:
   m_ObjectHideFlags: 0

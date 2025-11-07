@@ -12,8 +12,6 @@ public class Weapon : ScriptableObject
     public virtual int DMG(Stats stats)
     {
         float dmg = BasicDamage * ((float)(stats.Attack + 100) / 100);
-        Debug.Log(stats.Attack);
-        Debug.Log(dmg);
         return (int)dmg;
     }
 

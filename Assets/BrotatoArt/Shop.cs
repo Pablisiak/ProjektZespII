@@ -5,6 +5,8 @@ using UnityEngine.UI;
 using TMPro;
 using System.Text;
 using System.Reflection;
+using System.Diagnostics;
+using System.Linq;
 
 public class Shop : MonoBehaviour
 {
@@ -15,10 +17,13 @@ public class Shop : MonoBehaviour
     public Image Art;
     public Image Rare;
 
+    public int Tier;
+    public ShopMenager ShopManager;
+
     void Update()
     {
         Name.text = Item.Name;
-        Cost.text = Item.Cost.ToString();
+        Cost.text = (Players.players.PlayersList[0].GetComponent<Player>().Money >= Item.Cost) ? Item.Cost.ToString() : ($"<color=#FF0000>{Item.Cost}</color>");
         Art.sprite = Item.Sprite;
         switch (Item.Tier)
         {
@@ -39,7 +44,41 @@ public class Shop : MonoBehaviour
                 break;
         }
         string opis = FormatStats(Item.Stats);
-        Descript.text = opis;   
+        Descript.text = opis;
+    }
+
+    public void Roll()
+    {
+        int luck = Players.players.PlayersList[0].GetComponent<Player>().Stats.Luck + WaveManager.currentWaveIndex * 5;
+        int RNG = Random.Range(0, 100);
+        Tier = 0;
+        while (Tier < 5 && RNG < luck)
+        {
+            Tier++;
+            luck -= RNG;
+            RNG = Random.Range(0, 100);
+        }
+        Item = GetRandomItemByTier(Tier);
+    }
+    public void Buy()
+    {
+        if (Players.players.PlayersList[0].GetComponent<Player>().Money >= Item.Cost)
+        {
+            Players.players.PlayersList[0].GetComponent<Player>().Money -= Item.Cost;
+            Players.players.PlayersList[0].GetComponent<Player>().Items.Add(Item);
+            Players.players.PlayersList[0].GetComponent<Player>().Stats += Item.Stats;
+            gameObject.SetActive(false);
+        }
+    }
+    
+    public Item GetRandomItemByTier(int tier)
+    {
+        var filtered = ShopManager.Items.Where(item => item.Tier == tier).ToList();
+        if (filtered.Count == 0)
+            return null; // brak przedmiotów o tym tierze
+
+        int randomIndex = Random.Range(0, filtered.Count);
+        return filtered[randomIndex];
     }
 
     public string FormatStats(Stats stats)
