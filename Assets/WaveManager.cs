@@ -31,8 +31,14 @@ public class WaveManager : MonoBehaviour
 
     public static int currentWaveIndex = -1;
     private bool isWaveActive = false;
-    private List<GameObject> activeEnemies = new List<GameObject>();
+    public List<GameObject> activeEnemies = new List<GameObject>();
     public ShopMenager ShopMenager;
+    public static WaveManager waveManager;
+
+    void Awake()
+    {
+        waveManager = this;
+    }
 
     void Start()
     {
