@@ -72,6 +72,10 @@ public class PlayerShooting : MonoBehaviour
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
         rb.velocity = direction * bulletSpeed;
 
+        // Przypisanie strzału do danego gracza, aby wiedzieć kto ma otrzymać siano za killa
+        Bullet bulletComp = bullet.GetComponent<Bullet>();
+        bulletComp.owner = Player;
+
         bullet.GetComponent<Bullet>().damage = Player.Weapon.DMG(Player.Stats);
 
         // Krytyk

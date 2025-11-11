@@ -23,18 +23,18 @@ public class Enemy : MonoBehaviour
         transform.position += (Vector3)direction * speed * Time.deltaTime;
     }
 
-    public void TakeDamage(int amount)
+    public void TakeDamage(int amount, Player playerWhoShot = null)
     {
         currentHealth -= amount;
         if (currentHealth <= 0)
         {
-            Die();
+            Die(playerWhoShot);
         }
     }
 
-    void Die()
+    void Die(Player playerWhoShot)
     {
-        Players.players.PlayersList[0].GetComponent<Player>().Money += money;
+        if (playerWhoShot != null){ playerWhoShot.Money += money; }
         Debug.Log(money);
         Destroy(gameObject);
     }
@@ -69,16 +69,18 @@ public class Enemy : MonoBehaviour
         }
         if (collision.gameObject.CompareTag("Bullet"))
         {
-            
-            int DMG = collision.gameObject.GetComponent<Bullet>().damage;
-            if(collision.gameObject.GetComponent<Bullet>().crite)
-                ShowText((DMG).ToString(), Color.yellow);
-            else
-                ShowText((DMG).ToString());
-            Destroy(collision.gameObject);
-            currentHealth -= DMG;
-            if(currentHealth <= 0)
-                Die();
+            Bullet bulletComp = collision.gameObject.GetComponent<Bullet>();
+            if (bulletComp != null)
+            {
+                if (bulletComp.crite)
+                    ShowText(bulletComp.damage.ToString(), Color.yellow);
+                else
+                    ShowText(bulletComp.damage.ToString());
+                currentHealth -= bulletComp.damage;
+                if (currentHealth <= 0)
+                    Die(bulletComp.owner);
+                Destroy(collision.gameObject);
+            }
         }
     }
 }

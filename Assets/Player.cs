@@ -20,7 +20,7 @@ public class Player : MonoBehaviour
         int Rng = Random.Range(0,100);
         if(Rng < Stats.Doge)
         {
-            ShowText("Doge", Color.white);
+            ShowText("Dodge", Color.white);
         }
         else
         {

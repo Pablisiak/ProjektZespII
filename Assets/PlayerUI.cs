@@ -6,12 +6,19 @@ using TMPro;
 public class PlayerUI : MonoBehaviour
 {
     public Players AllPlayers;
-    public TMP_Text Health;
-    public TMP_Text Money;
+    public List<TMP_Text> Health;
+    public List<TMP_Text> Money;
 
     void Update()
     {
-        Health.text = AllPlayers.PlayersList[0].GetComponent<Player>().Stats.HP.ToString() + "/" + AllPlayers.PlayersList[0].GetComponent<Player>().Stats.MaxHP.ToString();
-        Money.text = AllPlayers.PlayersList[0].GetComponent<Player>().Money.ToString();
+        for (int i = 0; i < AllPlayers.PlayersList.Count; i++)
+        {
+            Player player = AllPlayers.PlayersList[i].GetComponent<Player>();
+            if (player != null)
+            {
+                Health[i].text = player.Stats.HP.ToString() + "/" + player.Stats.MaxHP.ToString();
+                Money[i].text = player.Money.ToString();
+            }
+        }
     }
 }

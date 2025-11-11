@@ -5,6 +5,7 @@ public class Bullet : MonoBehaviour
     public int damage = 25;
     public float lifetime = 1f;
     public bool crite;
+    public Player owner;
 
     void Start()
     {
@@ -35,7 +36,7 @@ public class Bullet : MonoBehaviour
         Enemy enemy = other.GetComponent<Enemy>();
         if (enemy != null)
         {
-            enemy.TakeDamage(damage);
+            enemy.TakeDamage(damage, owner);
             Destroy(gameObject);
         }
     }
