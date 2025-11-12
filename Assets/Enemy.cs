@@ -35,7 +35,6 @@ public class Enemy : MonoBehaviour
     void Die(Player playerWhoShot)
     {
         if (playerWhoShot != null){ playerWhoShot.Money += money; }
-        Debug.Log(money);
         Destroy(gameObject);
     }
 

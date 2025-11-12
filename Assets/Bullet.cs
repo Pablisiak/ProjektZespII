@@ -12,23 +12,25 @@ public class Bullet : MonoBehaviour
         // Zniszcz pocisk po określonym czasie
         Destroy(gameObject, lifetime);
 
-        // Pobierz pierwszego gracza z listy i zignoruj kolizję
+        // Pobierz WSZYSTKICH graczy z listy i zignoruj kolizję
         if (Players.players != null && Players.players.PlayersList.Count > 0)
         {
-            GameObject playerObj = Players.players.PlayersList[0];
+            Collider2D bulletCol = GetComponent<Collider2D>();
+            if (bulletCol == null) return;
 
-            if (playerObj != null)
+            foreach (GameObject playerObj in Players.players.PlayersList)
             {
-                Collider2D bulletCol = GetComponent<Collider2D>();
-                Collider2D playerCol = playerObj.GetComponent<Collider2D>();
-
-                if (bulletCol != null && playerCol != null)
+                if (playerObj != null)
                 {
-                    Physics2D.IgnoreCollision(bulletCol, playerCol);
+                    Collider2D playerCol = playerObj.GetComponent<Collider2D>();
+                    if (playerCol != null)
+                    {
+                        Physics2D.IgnoreCollision(bulletCol, playerCol);
+                    }
                 }
             }
         }
-    }
+}
 
     void OnTriggerEnter2D(Collider2D other)
     {
