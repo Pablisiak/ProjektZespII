@@ -9,11 +9,23 @@ public class ShopMenager : MonoBehaviour
 
     public void Roll()
     {
-        foreach(Shop shop in Shops)
+        foreach (Shop shop in Shops)
         {
             shop.gameObject.SetActive(true);
             shop.Roll();
-            
         }
     }
+    
+    public void RollForPlayer(int playerIndex)
+    {
+        foreach (Shop shop in Shops)
+        {
+            if (shop.PlayerIndex == playerIndex)
+            {
+                shop.gameObject.SetActive(true);
+                shop.Roll();
+            }
+        }
+    }
+
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 [System.Serializable]
 public class EnemyType
@@ -29,6 +30,12 @@ public class WaveManager : MonoBehaviour
     [Header("UI")]
     public WaveUI waveUI;
 
+    [Header("Rzeczy do ukrycia w sklepie")]
+    public List<GameObject> PlayerInterfaces;
+
+    [Header("Teksty pieniędzy graczy w sklepie")]
+    public List<TMP_Text> playerMoneyTexts;
+
     public static int currentWaveIndex = -1;
     private bool isWaveActive = false;
     public List<GameObject> activeEnemies = new List<GameObject>();
@@ -50,12 +57,18 @@ public class WaveManager : MonoBehaviour
 
     public void GiveKaska()
     {
-        Players.players.PlayersList[0].GetComponent<Player>().Money += Players.players.PlayersList[0].GetComponent<Player>().Stats.Harveresting;
+        foreach (var playerObj in Players.players.PlayersList)
+        {
+            Player player = playerObj.GetComponent<Player>();
+            player.Money += player.Stats.Harveresting;
+        }
     }
 
     public void StartNextWave()
     {
         if (isWaveActive) return;
+        // TODO: Po skończeniu wszystkich fal nakłada się HUD na sklep - docelowo podmienić na jakąś scenę Game Over czy coś takiego
+        SetPlayerInterfacesActive(true);
 
         currentWaveIndex++;
         if (currentWaveIndex >= waves.Count)
@@ -68,6 +81,29 @@ public class WaveManager : MonoBehaviour
 
         StartCoroutine(HandleWave(waves[currentWaveIndex]));
     }
+
+    public void SetPlayerInterfacesActive(bool active)
+    {
+        foreach (var ui in PlayerInterfaces)
+        {
+            if (ui != null)
+                ui.SetActive(active);
+        }
+    }
+
+    public void UpdatePlayerMoneyTexts()
+    {
+        for (int i = 0; i < playerMoneyTexts.Count; i++)
+        {
+            if (playerMoneyTexts[i] != null)
+            {
+                var player = Players.players.PlayersList[i].GetComponent<Player>();
+                int displayIndex = i + 1;
+                playerMoneyTexts[i].text = $"Gracz {displayIndex} - Pieniądze: {player.Money}$";
+            }
+        }
+    }
+
 
   IEnumerator HandleWave(Wave wave)
     {
@@ -122,6 +158,8 @@ public class WaveManager : MonoBehaviour
         GiveKaska();
         isWaveActive = false;
         shopUI.SetActive(true);
+        SetPlayerInterfacesActive(false);
+        UpdatePlayerMoneyTexts();
         ShopMenager.Roll();
         Debug.Log("Fala zakończona — sklep aktywny!");
     }

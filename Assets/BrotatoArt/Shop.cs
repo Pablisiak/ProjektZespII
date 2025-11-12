@@ -16,14 +16,23 @@ public class Shop : MonoBehaviour
     public TMP_Text Descript;
     public Image Art;
     public Image Rare;
+    public int PlayerIndex = 0;
 
     public int Tier;
     public ShopMenager ShopManager;
 
+    Player GetPlayer()
+    {
+        return Players.players.PlayersList[PlayerIndex].GetComponent<Player>();
+    }
+
     void Update()
     {
+        if (Item == null) return;
+        Player player = GetPlayer();
+
         Name.text = Item.Name;
-        Cost.text = (Players.players.PlayersList[0].GetComponent<Player>().Money >= Item.Cost) ? Item.Cost.ToString() : ($"<color=#FF0000>{Item.Cost}</color>");
+        Cost.text = (player.Money >= Item.Cost) ? Item.Cost.ToString() : ($"<color=#FF0000>{Item.Cost}</color>");
         Art.sprite = Item.Sprite;
         switch (Item.Tier)
         {
@@ -49,7 +58,8 @@ public class Shop : MonoBehaviour
 
     public void Roll()
     {
-        int luck = Players.players.PlayersList[0].GetComponent<Player>().Stats.Luck + WaveManager.currentWaveIndex * 5;
+        Player player = GetPlayer();
+        int luck = player.Stats.Luck + WaveManager.currentWaveIndex * 5;
         int RNG = Random.Range(0, 100);
         Tier = 0;
         while (Tier < 5 && RNG < luck)
@@ -62,12 +72,14 @@ public class Shop : MonoBehaviour
     }
     public void Buy()
     {
-        if (Players.players.PlayersList[0].GetComponent<Player>().Money >= Item.Cost)
+        Player player = GetPlayer();
+        if (player.Money >= Item.Cost)
         {
-            Players.players.PlayersList[0].GetComponent<Player>().Money -= Item.Cost;
-            Players.players.PlayersList[0].GetComponent<Player>().Items.Add(Item);
-            Players.players.PlayersList[0].GetComponent<Player>().Stats += Item.Stats;
+            player.Money -= Item.Cost;
+            player.Items.Add(Item);
+            player.Stats += Item.Stats;
             gameObject.SetActive(false);
+            WaveManager.waveManager.UpdatePlayerMoneyTexts();
         }
     }
     

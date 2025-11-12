@@ -1,13 +1,15 @@
-**Projekt zesp. II**
+# **Projekt zesp. II**
 
-*Opis:*
-Gra typu bullet heven
+**Gra typu bullet heaven**
 
 *Technologie:*
-Unity, C#
+```
+- Unity
+- C#
+```
 
 *Autorzy:*
-Michał Spychalski
-Igor Różanowski
-Szymon Rybacki
-Paweł Strużyński
+- Michał Spychalski (@spychalak)
+- Igor Różanowski (@Szyrrogi)
+- Szymon Rybacki (@szymonrybacki)
+- Paweł Strużyński (@Pablisiak)
