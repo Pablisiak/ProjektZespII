@@ -23,6 +23,7 @@ public class CameraFollow : MonoBehaviour
 
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.Tilemaps;
 
 public class CameraFollow : MonoBehaviour
 {
@@ -30,7 +31,8 @@ public class CameraFollow : MonoBehaviour
     public List<Transform> target;
 
     [Header("Mapa")]
-    public SpriteRenderer mapSprite;
+    
+    public Tilemap tilemap;
 
     [Header("Ruch kamery")]
     public Vector3 offset = new Vector3(0, 0, -10);
@@ -53,18 +55,12 @@ public class CameraFollow : MonoBehaviour
     {
         cam = GetComponent<Camera>();
 
-        if (mapSprite != null)
-        {
-            Vector2 mapSize = mapSprite.bounds.size;
-            Vector3 mapPos = mapSprite.transform.position;
+        BoundsInt bounds = tilemap.cellBounds;
+        Vector3 min = tilemap.CellToWorld(bounds.min);
+        Vector3 max = tilemap.CellToWorld(bounds.max);
 
-            minBounds = new Vector2(mapPos.x - mapSize.x / 2, mapPos.y - mapSize.y / 2);
-            maxBounds = new Vector2(mapPos.x + mapSize.x / 2, mapPos.y + mapSize.y / 2);
-        }
-        else
-        {
-            Debug.LogWarning("Wybierz sprite mapy! Kamera nie będzie miała granic.");
-        }
+        minBounds = (Vector2)min;
+        maxBounds = (Vector2)max;
     }
 
     void LateUpdate()
