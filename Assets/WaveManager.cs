@@ -105,7 +105,7 @@ public class WaveManager : MonoBehaviour
     }
 
 
-  IEnumerator HandleWave(Wave wave)
+    IEnumerator HandleWave(Wave wave)
     {
         isWaveActive = true;
         shopUI.SetActive(false);
@@ -154,7 +154,7 @@ public class WaveManager : MonoBehaviour
 
         if (waveUI != null)
             waveUI.UpdateWaveTimer(0);
-        
+
         GiveKaska();
         isWaveActive = false;
         shopUI.SetActive(true);
@@ -180,6 +180,6 @@ public class WaveManager : MonoBehaviour
     {
         float x = Random.Range(bottomLeft.position.x, topRight.position.x);
         float y = Random.Range(bottomLeft.position.y, topRight.position.y);
-        return new Vector3(x, y, 0);
+        return new Vector3(x, y, -0.001f);
     }
 }
