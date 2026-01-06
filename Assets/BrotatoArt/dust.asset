@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e35d7027348d7744a335aad533d1a70, type: 3}
   m_Name: dust
   m_EditorClassIdentifier: 
-  Name: 
+  Name: Tape
   Stats:
     HP: 0
     MaxHP: -2
@@ -29,6 +29,6 @@ MonoBehaviour:
     Speed: 0
     Luck: 0
     Harveresting: 0
-  Cost: 0
+  Cost: 1
   Sprite: {fileID: 21300000, guid: b5fd5c78588ad8b409753d7370ccad45, type: 3}
   Tier: 0
