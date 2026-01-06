@@ -1,10 +1,9 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
     [Header("Ustawienia ruchu")]
-    [SerializeField] private string inputNameHorizontal;
-    [SerializeField] private string inputNameVertical;
     private Vector2 moveInput;
 
     private Rigidbody2D rb;
@@ -17,14 +16,11 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
-        spriteRenderer = GetComponent<SpriteRenderer>(); // Dodaj tę linię
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     void Update()
     {
-        moveInput.x = Input.GetAxisRaw(inputNameHorizontal);
-        moveInput.y = Input.GetAxisRaw(inputNameVertical);
-
         moveInput = moveInput.normalized;
 
         HandleAnimation();
@@ -54,5 +50,9 @@ public class PlayerMovement : MonoBehaviour
         float moveMagnitude = moveInput.magnitude;
         anim.SetFloat("Speed", moveMagnitude);
     }
-
+    void OnMove(InputValue value)
+    {
+        moveInput = value.Get<Vector2>();
+    }
+    
 }
