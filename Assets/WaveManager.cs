@@ -110,16 +110,20 @@ public class WaveManager : MonoBehaviour
         isWaveActive = true;
         shopUI.SetActive(false);
 
-        // oblicz łączną liczbę przeciwników
+        int playerCount = Players.players.PlayersList.Count;
+        float playerMultiplier = Mathf.Pow(1.5f, playerCount - 1);
+
         int totalEnemies = 0;
-        foreach (var type in wave.enemies)
-            totalEnemies += type.count;
-
-        float spawnInterval = wave.duration / totalEnemies; // odstęp czasu między spawnami
         Dictionary<GameObject, int> remainingByType = new Dictionary<GameObject, int>();
-        foreach (var type in wave.enemies)
-            remainingByType[type.enemyPrefab] = type.count;
 
+        foreach (var type in wave.enemies)
+        {
+            int scaledCount = Mathf.CeilToInt(type.count * playerMultiplier);
+            totalEnemies += scaledCount;
+            remainingByType[type.enemyPrefab] = scaledCount;
+        }
+
+        float spawnInterval = wave.duration / totalEnemies;
         float elapsedTime = 0f;
 
         while (elapsedTime < wave.duration)
@@ -131,8 +135,6 @@ public class WaveManager : MonoBehaviour
             if (prefab != null)
             {
                 Vector3 spawnPos = GetRandomSpawnPosition();
-
-                // upewnij się, że nie pojawi się zbyt blisko gracza
                 if (Vector3.Distance(spawnPos, player.position) >= minDistanceFromPlayer)
                 {
                     GameObject enemy = Instantiate(prefab, spawnPos, Quaternion.identity);
@@ -145,7 +147,6 @@ public class WaveManager : MonoBehaviour
             elapsedTime += spawnInterval;
         }
 
-        // koniec fali – usuń pozostałych przeciwników, jeśli trzeba
         foreach (var e in activeEnemies)
         {
             if (e != null) Destroy(e);

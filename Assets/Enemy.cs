@@ -2,25 +2,114 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    [Header("Stats")]
     public float speed = 2f;
     public int maxHealth = 100;
+    public int healthPerRound;
     public int damage = 1;
     public int money = 1;
+
+    [Header("Rush ability")]
+    public bool enemyRush = false;
+    public float rushMultiplier = 8f;
+    public float rushDuration = 1f;
+    public float rushCooldown = 5f;
 
     private int currentHealth;
     private Transform player;
 
+    private float baseSpeed;
+    private float rushCooldownTimer;
+    private float rushDurationTimer;
+    private bool isRushing;
+    private Vector2 rushDirection;
+
     void Start()
     {
+        maxHealth += healthPerRound * WaveManager.currentWaveIndex;
         currentHealth = maxHealth;
-        player = GameObject.FindGameObjectWithTag("Player").transform;
+
+        baseSpeed = speed;
+        rushCooldownTimer = rushCooldown;
     }
 
     void Update()
     {
+        if (isRushing)
+        {
+            RushMove();
+            return;
+        }
+
+        player = GetNearestPlayer();
         if (player == null) return;
+
         Vector2 direction = (player.position - transform.position).normalized;
         transform.position += (Vector3)direction * speed * Time.deltaTime;
+
+        HandleRushCooldown(direction);
+    }
+
+
+    void HandleRushCooldown(Vector2 currentDirection)
+    {
+        if (!enemyRush) return;
+
+        rushCooldownTimer -= Time.deltaTime;
+
+        if (rushCooldownTimer <= 0f)
+        {
+            StartRush(currentDirection);
+        }
+    }
+
+    void StartRush(Vector2 direction)
+    {
+        isRushing = true;
+        rushDirection = direction; 
+        speed = baseSpeed * rushMultiplier;
+        rushDurationTimer = rushDuration;
+        rushCooldownTimer = rushCooldown;
+    }
+
+    void RushMove()
+    {
+        transform.position += (Vector3)rushDirection * speed * Time.deltaTime;
+
+        rushDurationTimer -= Time.deltaTime;
+        if (rushDurationTimer <= 0f)
+        {
+            EndRush();
+        }
+    }
+
+    void EndRush()
+    {
+        isRushing = false;
+        speed = baseSpeed;
+    }
+
+    Transform GetNearestPlayer()
+    {
+        if (Players.players == null || Players.players.PlayersList.Count == 0)
+            return null;
+
+        Transform nearest = null;
+        float shortestDistance = Mathf.Infinity;
+
+        foreach (GameObject p in Players.players.PlayersList)
+        {
+            if (p == null) continue;
+
+            float dist = Vector2.Distance(transform.position, p.transform.position);
+            if (dist < shortestDistance)
+            {
+                shortestDistance = dist;
+                nearest = p.transform;
+            }
+        }
+
+        return nearest;
     }
 
     public void TakeDamage(int amount, Player playerWhoShot = null)
@@ -34,50 +123,63 @@ public class Enemy : MonoBehaviour
 
     void Die(Player playerWhoShot)
     {
-        if (playerWhoShot != null){ playerWhoShot.Money += money; }
+        if (playerWhoShot != null)
+            playerWhoShot.Money += money;
+
         Destroy(gameObject);
     }
 
     void ShowText(string tekst)
     {
-        GameObject NewPop = Instantiate(PrefabMenager.prefabMenager.PopUp, transform.position, Quaternion.identity);
-        NewPop.GetComponent<PopUp>().Set(tekst);
-        Destroy(NewPop, 1f);
+        GameObject pop = Instantiate(
+            PrefabMenager.prefabMenager.PopUp,
+            transform.position,
+            Quaternion.identity
+        );
+
+        pop.GetComponent<PopUp>().Set(tekst);
+        Destroy(pop, 1f);
     }
 
     void ShowText(string tekst, Color kolor)
     {
-        GameObject NewPop = Instantiate(PrefabMenager.prefabMenager.PopUp, transform.position, Quaternion.identity);
-        PopUp pop = NewPop.GetComponent<PopUp>();
-        pop.Set(tekst);
-        pop.SetColor(kolor); 
-        Destroy(NewPop, 1f);
-    }
+        GameObject pop = Instantiate(
+            PrefabMenager.prefabMenager.PopUp,
+            transform.position,
+            Quaternion.identity
+        );
 
+        PopUp p = pop.GetComponent<PopUp>();
+        p.Set(tekst);
+        p.SetColor(kolor);
+        Destroy(pop, 1f);
+    }
 
     void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            Debug.Log("ooooo");
             Player playerHealth = collision.gameObject.GetComponent<Player>();
             if (playerHealth != null)
             {
                 playerHealth.TakeDamage(damage);
             }
         }
+
         if (collision.gameObject.CompareTag("Bullet"))
         {
-            Bullet bulletComp = collision.gameObject.GetComponent<Bullet>();
-            if (bulletComp != null)
+            Bullet bullet = collision.gameObject.GetComponent<Bullet>();
+            if (bullet != null)
             {
-                if (bulletComp.crite)
-                    ShowText(bulletComp.damage.ToString(), Color.yellow);
+                if (bullet.crite)
+                    ShowText(bullet.damage.ToString(), Color.yellow);
                 else
-                    ShowText(bulletComp.damage.ToString());
-                currentHealth -= bulletComp.damage;
+                    ShowText(bullet.damage.ToString());
+
+                currentHealth -= bullet.damage;
                 if (currentHealth <= 0)
-                    Die(bulletComp.owner);
+                    Die(bullet.owner);
+
                 Destroy(collision.gameObject);
             }
         }

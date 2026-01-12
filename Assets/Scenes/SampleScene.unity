@@ -7955,12 +7955,60 @@ MonoBehaviour:
   waves:
   - enemies:
     - enemyPrefab: {fileID: 8645619629383062685, guid: 16e9e1723b08cf643b4b046d5aa45024, type: 3}
-      count: 60
+      count: 40
     duration: 20
   - enemies:
     - enemyPrefab: {fileID: 8645619629383062685, guid: 16e9e1723b08cf643b4b046d5aa45024, type: 3}
-      count: 200
+      count: 40
     duration: 40
+  - enemies:
+    - enemyPrefab: {fileID: 8645619629383062685, guid: 16e9e1723b08cf643b4b046d5aa45024, type: 3}
+      count: 40
+    - enemyPrefab: {fileID: 8645619629383062685, guid: f0426ef87c65a9140823c99559fbed40, type: 3}
+      count: 40
+    duration: 40
+  - enemies:
+    - enemyPrefab: {fileID: 8645619629383062685, guid: 16e9e1723b08cf643b4b046d5aa45024, type: 3}
+      count: 60
+    - enemyPrefab: {fileID: 8645619629383062685, guid: f0426ef87c65a9140823c99559fbed40, type: 3}
+      count: 60
+    duration: 40
+  - enemies:
+    - enemyPrefab: {fileID: 8645619629383062685, guid: f0426ef87c65a9140823c99559fbed40, type: 3}
+      count: 40
+    - enemyPrefab: {fileID: 8645619629383062685, guid: d08e2e033c0603846847d83b3e02328a, type: 3}
+      count: 10
+    duration: 60
+  - enemies:
+    - enemyPrefab: {fileID: 8645619629383062685, guid: 16e9e1723b08cf643b4b046d5aa45024, type: 3}
+      count: 40
+    - enemyPrefab: {fileID: 8645619629383062685, guid: d08e2e033c0603846847d83b3e02328a, type: 3}
+      count: 20
+    duration: 60
+  - enemies:
+    - enemyPrefab: {fileID: 8645619629383062685, guid: 608f2de24092f664493a97505ca364be, type: 3}
+      count: 60
+    duration: 60
+  - enemies:
+    - enemyPrefab: {fileID: 8645619629383062685, guid: 16e9e1723b08cf643b4b046d5aa45024, type: 3}
+      count: 200
+    - enemyPrefab: {fileID: 8645619629383062685, guid: 608f2de24092f664493a97505ca364be, type: 3}
+      count: 60
+    duration: 60
+  - enemies:
+    - enemyPrefab: {fileID: 8645619629383062685, guid: 16e9e1723b08cf643b4b046d5aa45024, type: 3}
+      count: 60
+    - enemyPrefab: {fileID: 8645619629383062685, guid: d08e2e033c0603846847d83b3e02328a, type: 3}
+      count: 60
+    - enemyPrefab: {fileID: 8645619629383062685, guid: 608f2de24092f664493a97505ca364be, type: 3}
+      count: 60
+    duration: 60
+  - enemies:
+    - enemyPrefab: {fileID: 8645619629383062685, guid: d08e2e033c0603846847d83b3e02328a, type: 3}
+      count: 80
+    - enemyPrefab: {fileID: 8645619629383062685, guid: 4e68316fbab9d6b42886c79728219ede, type: 3}
+      count: 1
+    duration: 80
   bottomLeft: {fileID: 993419432}
   topRight: {fileID: 492182164}
   player: {fileID: 1066606712}

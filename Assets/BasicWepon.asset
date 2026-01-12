@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c75072c8b12d72f46abc52ebaae06ee1, type: 3}
   m_Name: BasicWepon
   m_EditorClassIdentifier: 
-  BasicDamage: 40
+  BasicDamage: 4
   FireRate: 0.25
   CritDamage: 2
