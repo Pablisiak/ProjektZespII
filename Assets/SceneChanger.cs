@@ -4,9 +4,17 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 public class SceneChanger : MonoBehaviour
 {
-    public void StartGame()
+    public static int playerCount = 1;
+    public void StartGameSP()
     {
+        playerCount = 1;
         SceneManager.LoadScene(1);
+    }
+
+    public void StartGameMP(int count)
+    {
+        playerCount = count;
+        SceneManager.LoadScene(1);   
     }
 
     public void Menu()

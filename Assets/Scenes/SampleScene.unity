@@ -8005,6 +8005,7 @@ MonoBehaviour:
   - {fileID: 711771201}
   - {fileID: 140863104}
   - {fileID: 798397565}
+  playerQuantity: {fileID: 1522223687}
   activeEnemies: []
   ShopMenager: {fileID: 1099466989}
 --- !u!114 &1126134582
@@ -9741,6 +9742,68 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1490306573}
   m_CullTransparentMesh: 1
+--- !u!1 &1522223686
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1522223688}
+  - component: {fileID: 1522223687}
+  m_Layer: 0
+  m_Name: PlayerQuantity
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1522223687
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1522223686}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7331a842d0bd2ee4c839931686b83604, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerPrefabs:
+  - {fileID: 908463781}
+  - {fileID: 83365553}
+  - {fileID: 268085950}
+  - {fileID: 321672791}
+  playerUIs:
+  - {fileID: 1163651253}
+  - {fileID: 2075384365}
+  - {fileID: 1191185107}
+  - {fileID: 2046932260}
+  playerShops:
+  - {fileID: 1376211465}
+  - {fileID: 1564999077}
+  - {fileID: 1093828653}
+  - {fileID: 141336196}
+  playerCount: 2
+  additionalUI:
+  - {fileID: 2088816587}
+--- !u!4 &1522223688
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1522223686}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 5.7800884, y: 12.762382, z: -10.16746}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1531627735
 GameObject:
   m_ObjectHideFlags: 0
@@ -26851,3 +26914,4 @@ SceneRoots:
   - {fileID: 990706053}
   - {fileID: 1126134584}
   - {fileID: 122173077}
+  - {fileID: 1522223688}

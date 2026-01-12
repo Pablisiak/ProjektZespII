@@ -36,11 +36,15 @@ public class WaveManager : MonoBehaviour
     [Header("Teksty pieniędzy graczy w sklepie")]
     public List<TMP_Text> playerMoneyTexts;
 
+    [Header("Ilość graczy")]
+    public PlayerQuantity playerQuantity;
+
     public static int currentWaveIndex = -1;
     private bool isWaveActive = false;
     public List<GameObject> activeEnemies = new List<GameObject>();
     public ShopMenager ShopMenager;
     public static WaveManager waveManager;
+    
 
     void Awake()
     {
@@ -84,10 +88,19 @@ public class WaveManager : MonoBehaviour
 
     public void SetPlayerInterfacesActive(bool active)
     {
-        foreach (var ui in PlayerInterfaces)
+        foreach (var playerObj in playerQuantity.playerPrefabs)
         {
-            if (ui != null)
-                ui.SetActive(active);
+            if (playerObj.activeSelf)
+            {
+            int index = System.Array.IndexOf(playerQuantity.playerPrefabs, playerObj);
+            if (index >= 0 && index < playerQuantity.playerUIs.Length)
+                playerQuantity.playerUIs[index].SetActive(active);
+            }
+        }
+        foreach (var obj in playerQuantity.additionalUI)
+        {
+            if (obj != null)
+            obj.SetActive(active);
         }
     }
 
