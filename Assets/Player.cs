@@ -8,9 +8,13 @@ public class Player : MonoBehaviour
     public Weapon Weapon;
     public int Money;
     public List<Item> Items;
+    private Animator anim;
+    public bool IsDead = false;
+    public bool IsHurt = false;
 
     void Start()
     {
+        anim = GetComponent<Animator>();
         Stats.HP = Stats.MaxHP;
         StartCoroutine(Regeneration());
     }
@@ -31,10 +35,17 @@ public class Player : MonoBehaviour
             }
             dmg = (int)dmg;
             ShowText(dmg.ToString(), Color.red);
+            
             Stats.HP -= (int)dmg;
+            IsHurt = true;
+
+            anim.SetTrigger("Hurt");
+
             if (Stats.HP <= 0)
-            {
+            {   
                 Debug.Log("Gracz zginął!");
+                IsDead = true;
+                anim.SetBool("Dead", true);
             }
         }
     }
@@ -71,5 +82,10 @@ public class Player : MonoBehaviour
 
             yield return new WaitForSeconds(10f/wait); 
         }
+    }
+
+    public void OnHurtAnimationEnd()
+    {
+        IsHurt = false;
     }
 }

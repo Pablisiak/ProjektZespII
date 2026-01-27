@@ -23,9 +23,15 @@ public class Enemy : MonoBehaviour
     private float rushDurationTimer;
     private bool isRushing;
     private Vector2 rushDirection;
+    private Animator anim;
+    private bool isDead = false;
+    private SpriteRenderer spriteRenderer;
 
     void Start()
     {
+        anim = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+
         maxHealth += healthPerRound * WaveManager.currentWaveIndex;
         currentHealth = maxHealth;
 
@@ -45,6 +51,16 @@ public class Enemy : MonoBehaviour
         if (player == null) return;
 
         Vector2 direction = (player.position - transform.position).normalized;
+
+        if (direction.x > 0)
+        {
+            spriteRenderer.flipX = false;
+        }
+        else if(direction.x < 0)
+        {
+            spriteRenderer.flipX = true;
+        }
+
         transform.position += (Vector3)direction * speed * Time.deltaTime;
 
         HandleRushCooldown(direction);
@@ -100,6 +116,10 @@ public class Enemy : MonoBehaviour
         foreach (GameObject p in Players.players.PlayersList)
         {
             if (p == null) continue;
+            if (!p.activeInHierarchy) continue;
+
+            Player pl = p.GetComponent<Player>();
+            if (pl == null) continue;
 
             float dist = Vector2.Distance(transform.position, p.transform.position);
             if (dist < shortestDistance)
@@ -126,7 +146,6 @@ public class Enemy : MonoBehaviour
         if (playerWhoShot != null)
             playerWhoShot.Money += money;
 
-        Destroy(gameObject);
     }
 
     void ShowText(string tekst)
@@ -159,15 +178,21 @@ public class Enemy : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
+            if(isDead) return;
+
             Player playerHealth = collision.gameObject.GetComponent<Player>();
             if (playerHealth != null)
             {
+                anim.ResetTrigger("Attack");
+                anim.SetTrigger("Attack");
                 playerHealth.TakeDamage(damage);
             }
         }
 
         if (collision.gameObject.CompareTag("Bullet"))
         {
+
+            if(isDead) return;
             Bullet bullet = collision.gameObject.GetComponent<Bullet>();
             if (bullet != null)
             {
@@ -177,11 +202,24 @@ public class Enemy : MonoBehaviour
                     ShowText(bullet.damage.ToString());
 
                 currentHealth -= bullet.damage;
-                if (currentHealth <= 0)
-                    Die(bullet.owner);
 
-                Destroy(collision.gameObject);
+                if(currentHealth > 0) {
+                    anim.SetTrigger("Hurt");
+                }
+                else {
+                    isDead = true;
+                    anim.SetBool("Dead", true);
+
+                    if (bullet.owner != null)
+                        bullet.owner.Money += money;
+                }
+              Destroy(collision.gameObject);
             }
         }
+    }
+
+    public void OnDeathAnimationEnd()
+    {
+        Destroy(gameObject);
     }
 }

@@ -16,9 +16,19 @@ public class PlayerShooting : MonoBehaviour
     [Header("Auto-Target")]
     public float Range = 10f; // maksymalny zasięg strzału
     private GameObject currentTarget;
+    private Animator anim;
+
+    void Start()
+    {
+        anim = GetComponent<Animator>();
+    }
 
     void Update()
     {
+
+        if(Player.IsDead || Player.IsHurt)
+            return;
+
         fireRate = Player.Weapon.FireRate / ((float)(Player.Stats.AttackSpeed + 100) / 100);
 
         FindNearestEnemy();
@@ -66,6 +76,9 @@ public class PlayerShooting : MonoBehaviour
 
     void ShootAt(Transform target)
     {
+
+        anim.ResetTrigger("Attack");
+        anim.SetTrigger("Attack");
         Vector2 direction = (target.position - firePoint.position).normalized;
 
         GameObject bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
@@ -91,5 +104,6 @@ public class PlayerShooting : MonoBehaviour
 
         bullet.GetComponent<Bullet>().lifetime *= ((float)(Player.Stats.Range + 100) / 100);
         bullet.transform.right = direction;
+
     }
 }
