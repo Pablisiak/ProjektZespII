@@ -53,6 +53,10 @@ public class CameraFollow : MonoBehaviour
 
     void Start()
     {
+        if (target.Count > SceneChanger.playerCount)
+            target = target.GetRange(0, SceneChanger.playerCount);
+
+        Debug.Log("Target: " + target.Count);
         cam = GetComponent<Camera>();
 
         BoundsInt bounds = tilemap.cellBounds;

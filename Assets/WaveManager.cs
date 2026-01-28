@@ -123,8 +123,11 @@ public class WaveManager : MonoBehaviour
         isWaveActive = true;
         shopUI.SetActive(false);
 
-        int playerCount = Players.players.PlayersList.Count;
+        int playerCount = SceneChanger.playerCount;
         float playerMultiplier = Mathf.Pow(1.5f, playerCount - 1);
+
+        Debug.Log("Player count: " + playerCount);
+        Debug.Log("Player multiplier: " + playerMultiplier);
 
         int totalEnemies = 0;
         Dictionary<GameObject, int> remainingByType = new Dictionary<GameObject, int>();

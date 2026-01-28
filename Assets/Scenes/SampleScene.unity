@@ -2339,30 +2339,6 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 0.98469865
       objectReference: {fileID: 0}
-    - target: {fileID: 3488548752729756983, guid: e880db3dd93691641ad6d9431b80a3a5, type: 3}
-      propertyPath: Stats.Doge
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 3488548752729756983, guid: e880db3dd93691641ad6d9431b80a3a5, type: 3}
-      propertyPath: Stats.Armor
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 3488548752729756983, guid: e880db3dd93691641ad6d9431b80a3a5, type: 3}
-      propertyPath: Stats.Range
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3488548752729756983, guid: e880db3dd93691641ad6d9431b80a3a5, type: 3}
-      propertyPath: Stats.Attack
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 3488548752729756983, guid: e880db3dd93691641ad6d9431b80a3a5, type: 3}
-      propertyPath: Stats.Harveresting
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3488548752729756983, guid: e880db3dd93691641ad6d9431b80a3a5, type: 3}
-      propertyPath: Stats.RegenerationHP
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 5208536456556805704, guid: e880db3dd93691641ad6d9431b80a3a5, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.68
@@ -3737,30 +3713,6 @@ PrefabInstance:
     - target: {fileID: 9931277376816532, guid: e880db3dd93691641ad6d9431b80a3a5, type: 3}
       propertyPath: m_Color.r
       value: 0.83346844
-      objectReference: {fileID: 0}
-    - target: {fileID: 3488548752729756983, guid: e880db3dd93691641ad6d9431b80a3a5, type: 3}
-      propertyPath: Stats.Doge
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 3488548752729756983, guid: e880db3dd93691641ad6d9431b80a3a5, type: 3}
-      propertyPath: Stats.Armor
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 3488548752729756983, guid: e880db3dd93691641ad6d9431b80a3a5, type: 3}
-      propertyPath: Stats.Range
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3488548752729756983, guid: e880db3dd93691641ad6d9431b80a3a5, type: 3}
-      propertyPath: Stats.Attack
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 3488548752729756983, guid: e880db3dd93691641ad6d9431b80a3a5, type: 3}
-      propertyPath: Stats.Harveresting
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3488548752729756983, guid: e880db3dd93691641ad6d9431b80a3a5, type: 3}
-      propertyPath: Stats.RegenerationHP
-      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5208536456556805704, guid: e880db3dd93691641ad6d9431b80a3a5, type: 3}
       propertyPath: m_LocalPosition.x
@@ -8332,30 +8284,6 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3488548752729756983, guid: e880db3dd93691641ad6d9431b80a3a5, type: 3}
-      propertyPath: Stats.Doge
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 3488548752729756983, guid: e880db3dd93691641ad6d9431b80a3a5, type: 3}
-      propertyPath: Stats.Armor
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 3488548752729756983, guid: e880db3dd93691641ad6d9431b80a3a5, type: 3}
-      propertyPath: Stats.Range
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3488548752729756983, guid: e880db3dd93691641ad6d9431b80a3a5, type: 3}
-      propertyPath: Stats.Attack
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 3488548752729756983, guid: e880db3dd93691641ad6d9431b80a3a5, type: 3}
-      propertyPath: Stats.Harveresting
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3488548752729756983, guid: e880db3dd93691641ad6d9431b80a3a5, type: 3}
-      propertyPath: Stats.RegenerationHP
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 5208536456556805704, guid: e880db3dd93691641ad6d9431b80a3a5, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.11
@@ -9378,34 +9306,6 @@ PrefabInstance:
     - target: {fileID: 9931277376816532, guid: e880db3dd93691641ad6d9431b80a3a5, type: 3}
       propertyPath: m_Color.r
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3488548752729756983, guid: e880db3dd93691641ad6d9431b80a3a5, type: 3}
-      propertyPath: Stats.Doge
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 3488548752729756983, guid: e880db3dd93691641ad6d9431b80a3a5, type: 3}
-      propertyPath: Stats.Luck
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 3488548752729756983, guid: e880db3dd93691641ad6d9431b80a3a5, type: 3}
-      propertyPath: Stats.Armor
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 3488548752729756983, guid: e880db3dd93691641ad6d9431b80a3a5, type: 3}
-      propertyPath: Stats.Range
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3488548752729756983, guid: e880db3dd93691641ad6d9431b80a3a5, type: 3}
-      propertyPath: Stats.Attack
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 3488548752729756983, guid: e880db3dd93691641ad6d9431b80a3a5, type: 3}
-      propertyPath: Stats.Harveresting
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3488548752729756983, guid: e880db3dd93691641ad6d9431b80a3a5, type: 3}
-      propertyPath: Stats.RegenerationHP
-      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5208536456556805704, guid: e880db3dd93691641ad6d9431b80a3a5, type: 3}
       propertyPath: m_LocalPosition.x
