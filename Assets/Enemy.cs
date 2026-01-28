@@ -120,6 +120,7 @@ public class Enemy : MonoBehaviour
 
             Player pl = p.GetComponent<Player>();
             if (pl == null) continue;
+            if (pl.IsDead) continue;
 
             float dist = Vector2.Distance(transform.position, p.transform.position);
             if (dist < shortestDistance)

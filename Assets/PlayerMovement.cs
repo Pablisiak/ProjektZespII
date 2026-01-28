@@ -21,11 +21,29 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        if (player != null && (player.IsDead || player.IsHurt))
+        {
+            moveInput = Vector2.zero;
+            HandleAnimation();
+            return;
+        }
+
         moveInput = moveInput.normalized;
 
         HandleAnimation();
         HandleFlip();
     }
+
+
+    void FixedUpdate()
+    {
+        if (player != null && (player.IsDead || player.IsHurt))
+            return;
+
+        float speed = 5 * ((float)(player.Stats.Speed + 100) / 100);
+        rb.MovePosition(rb.position + moveInput * speed * Time.fixedDeltaTime);
+    }
+
 
     private void HandleFlip()
     {
@@ -37,12 +55,6 @@ public class PlayerMovement : MonoBehaviour
         {
             spriteRenderer.flipX = true;
         }
-    }
-
-    void FixedUpdate()
-    {
-        float speed = 5 * ((float)(player.Stats.Speed + 100) / 100);
-        rb.MovePosition(rb.position + moveInput * speed * Time.fixedDeltaTime);
     }
 
     private void HandleAnimation()

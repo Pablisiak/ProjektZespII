@@ -1,9 +1,12 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
+using System;
 
 public class Player : MonoBehaviour
 {
+    public static event Action<Player> AnyPlayerDied;
+    public event Action<Player> Died;
     public Stats Stats;
     public Weapon Weapon;
     public int Money;
@@ -21,7 +24,7 @@ public class Player : MonoBehaviour
 
     public void TakeDamage(int amount)
     {
-        int Rng = Random.Range(0,100);
+        int Rng = UnityEngine.Random.Range(0,100);
         if(Rng < Stats.Doge)
         {
             ShowText("Dodge", Color.white);
@@ -48,7 +51,48 @@ public class Player : MonoBehaviour
                 anim.SetBool("Dead", true);
             }
         }
+
+        if (Stats.HP <= 0 && !IsDead)
+        {
+            Die();
+        }
     }
+
+    void Die()
+    {
+        Debug.Log("UMAR");
+
+        if (IsDead) return;
+
+        IsDead = true;
+
+        // Wyłącz sterowanie
+        var movement = GetComponent<PlayerMovement>();
+        if (movement != null)
+            movement.enabled = false;
+
+        var shooting = GetComponent<PlayerShooting>();
+        if (shooting != null)
+            shooting.enabled = false;
+
+        // Wyłącz kolizję
+        var col = GetComponent<Collider2D>();
+        if (col != null)
+            col.enabled = false;
+
+        // Wyłącz fizykę
+        var rb = GetComponent<Rigidbody2D>();
+        if (rb != null)
+        {
+            rb.velocity = Vector2.zero;
+            rb.simulated = false;
+        }
+
+        Died?.Invoke(this);
+        AnyPlayerDied?.Invoke(this);
+    }
+
+
 
     void ShowText(string tekst)
     {
