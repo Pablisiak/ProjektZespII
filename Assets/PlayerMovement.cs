@@ -21,7 +21,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        if (player != null && (player.IsDead || player.IsHurt))
+        if (player != null && player.IsDead)
         {
             moveInput = Vector2.zero;
             HandleAnimation();
@@ -37,7 +37,7 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (player != null && (player.IsDead || player.IsHurt))
+        if (player != null && player.IsDead)
             return;
 
         float speed = 5 * ((float)(player.Stats.Speed + 100) / 100);

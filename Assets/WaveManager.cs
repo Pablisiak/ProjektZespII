@@ -117,11 +117,30 @@ public class WaveManager : MonoBehaviour
         }
     }
 
+    void RevivePlayersForNewWave()
+    {
+        int count = (playerQuantity != null) ? playerQuantity.playerCount : 1;
+        count = Mathf.Clamp(count, 1, playerQuantity.playerPrefabs.Length);
+
+        for (int i = 0; i < count; i++)
+        {
+            var go = playerQuantity.playerPrefabs[i];
+            if (go == null) continue;
+
+            if (!go.activeSelf) go.SetActive(true);
+
+            var p = go.GetComponent<Player>();
+            if (p != null)
+                p.ReviveFullHP();
+        }
+    }
 
     IEnumerator HandleWave(Wave wave)
     {
         isWaveActive = true;
         shopUI.SetActive(false);
+        RevivePlayersForNewWave();
+
 
         int playerCount = SceneChanger.playerCount;
         float playerMultiplier = Mathf.Pow(1.5f, playerCount - 1);

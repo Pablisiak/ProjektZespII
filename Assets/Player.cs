@@ -5,6 +5,7 @@ using System;
 
 public class Player : MonoBehaviour
 {
+    SpriteRenderer spriteRenderer;
     public static event Action<Player> AnyPlayerDied;
     public event Action<Player> Died;
     public Stats Stats;
@@ -17,6 +18,7 @@ public class Player : MonoBehaviour
 
     void Start()
     {
+        spriteRenderer = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
         Stats.HP = Stats.MaxHP;
         StartCoroutine(Regeneration());
@@ -47,6 +49,13 @@ public class Player : MonoBehaviour
             if (Stats.HP <= 0)
             {   
                 Debug.Log("Gracz zginął!");
+                if (spriteRenderer != null)
+                {
+                    Debug.Log("W ifie");
+                    Color c = spriteRenderer.color;
+                    c.a = 0.2f;
+                    spriteRenderer.color = c;
+                }
                 IsDead = true;
                 anim.SetBool("Dead", true);
             }
@@ -57,6 +66,35 @@ public class Player : MonoBehaviour
             Die();
         }
     }
+
+    public void ReviveFullHP()
+    {
+        IsDead = false;
+        IsHurt = false;
+
+        Stats.HP = Stats.MaxHP;
+
+        if (anim == null)
+            anim = GetComponent<Animator>();
+
+        anim.SetBool("Dead", false);
+
+        var col = GetComponent<Collider2D>();
+        if (col != null) col.enabled = true;
+
+        var rb = GetComponent<Rigidbody2D>();
+        if (rb != null) rb.simulated = true;
+
+        if (spriteRenderer != null)
+        {
+            Color c = spriteRenderer.color;
+            c.a = 1f;
+            spriteRenderer.color = c;
+        }
+
+        
+    }
+
 
     void Die()
     {
@@ -90,6 +128,9 @@ public class Player : MonoBehaviour
 
         Died?.Invoke(this);
         AnyPlayerDied?.Invoke(this);
+
+
+        
     }
 
 
