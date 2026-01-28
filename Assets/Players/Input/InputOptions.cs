@@ -17,6 +17,11 @@ public class InputOptions : MonoBehaviour
     void Start()
     {
         UpdateMoveButtons();
+
+        upButton.onClick.AddListener(() => Rebind("up"));
+        downButton.onClick.AddListener(() => Rebind("down"));
+        leftButton.onClick.AddListener(() => Rebind("left"));
+        rightButton.onClick.AddListener(() => Rebind("right"));
     }
 
     public void UpdateMoveButtons()
@@ -61,4 +66,32 @@ public class InputOptions : MonoBehaviour
         }
         return "";
     }
+    void Rebind(string partName)
+    {
+        var action = inputActions.FindActionMap(actionMapName)?.FindAction(actionName);
+        if (action == null) return;
+        int bindingIndex = -1;
+
+        for (int i = 0; i < action.bindings.Count; i++)
+        {
+            if (action.bindings[i].isPartOfComposite && action.bindings[i].name == partName)
+            {
+                bindingIndex = i;
+                break;
+            }
+        }
+        if (bindingIndex == -1) return;
+        action.Disable();
+
+        action.PerformInteractiveRebinding(bindingIndex)
+        .WithCancelingThrough("<Keyboard>/escape")
+        .OnComplete(operation =>
+        {
+            action.Enable();
+            operation.Dispose();
+            UpdateMoveButtons();
+        })
+        .Start();
+    }
 }
+
