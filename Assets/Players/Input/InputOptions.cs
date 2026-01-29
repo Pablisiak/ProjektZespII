@@ -13,15 +13,21 @@ public class InputOptions : MonoBehaviour
     public Button downButton;
     public Button leftButton;
     public Button rightButton;
+    public Button keyboardButton;
+    public Button gamepadButton;
+    public string playerName;
 
     void Start()
     {
+        LoadBindings();
         UpdateMoveButtons();
 
         upButton.onClick.AddListener(() => Rebind("up"));
         downButton.onClick.AddListener(() => Rebind("down"));
         leftButton.onClick.AddListener(() => Rebind("left"));
         rightButton.onClick.AddListener(() => Rebind("right"));
+        keyboardButton.onClick.AddListener(() => SetControlScheme("Keyboard&Mouse"));
+        gamepadButton.onClick.AddListener(() => SetControlScheme("Gamepad"));
     }
 
     public void UpdateMoveButtons()
@@ -44,30 +50,37 @@ public class InputOptions : MonoBehaviour
 
     string GetBindingForComposite(InputAction action, string partName)
     {
+        string activeScheme = PlayerPrefs.GetString("ControlScheme_" + playerName, "Keyboard&Mouse");
+
         foreach (var b in action.bindings)
         {
-            if (b.isPartOfComposite && b.name == partName)
-            {
-                if (b.effectivePath.Contains("stick"))
+            if (!b.isPartOfComposite || b.name != partName) continue;
+                if (activeScheme == "Gamepad")
                 {
-                    switch (partName)
+                    return partName switch
                     {
-                        case "up": return "Left Stick ↑";
-                        case "down": return "Left Stick ↓";
-                        case "left": return "Left Stick ←";
-                        case "right": return "Left Stick →";
-                    }
+                        "up" => "Left Stick ↑",
+                        "down" => "Left Stick ↓",
+                        "left" => "Left Stick ←",
+                        "right" => "Left Stick →",
+                        _ => "-"
+                    };
                 }
                 else
                 {
                     return b.ToDisplayString();
                 }
-            }
         }
         return "";
     }
     void Rebind(string partName)
     {
+        string activeScheme = PlayerPrefs.GetString("ControlScheme_" + playerName, "Keyboard&Mouse");
+        if (activeScheme == "Gamepad")
+        {
+            Debug.Log("Nie można rebindować używając pada!");
+            return;
+        }
         var action = inputActions.FindActionMap(actionMapName)?.FindAction(actionName);
         if (action == null) return;
         int bindingIndex = -1;
@@ -89,9 +102,37 @@ public class InputOptions : MonoBehaviour
         {
             action.Enable();
             operation.Dispose();
+            string bindingPath = action.bindings[bindingIndex].effectivePath;
+            PlayerPrefs.SetString(action.name + "_" + partName + "_" + playerName, bindingPath);
+            PlayerPrefs.Save();
             UpdateMoveButtons();
         })
         .Start();
+    }
+    void SetControlScheme(string scheme)
+    {
+        PlayerPrefs.SetString("ControlScheme_" + playerName, scheme);
+        PlayerPrefs.Save();
+        //Debug.Log(""+playerName+"  "+scheme);
+        UpdateMoveButtons();
+    }
+    void LoadBindings()
+    {
+        var action = inputActions.FindActionMap(actionMapName)?.FindAction(actionName);
+        if (action == null) return;
+
+        for (int i = 0; i < action.bindings.Count; i++)
+        {
+            var b = action.bindings[i];
+            if (!b.isPartOfComposite) continue;
+
+            string key = action.name + "_" + b.name + "_" + playerName;
+            if (PlayerPrefs.HasKey(key))
+            {
+                string path = PlayerPrefs.GetString(key);
+                action.ApplyBindingOverride(i, path);
+            }
+        }
     }
 }
 
