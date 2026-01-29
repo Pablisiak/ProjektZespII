@@ -35,6 +35,7 @@ public class WaveManager : MonoBehaviour
 
     [Header("Teksty pieniędzy graczy w sklepie")]
     public List<TMP_Text> playerMoneyTexts;
+    public RectTransform cursorRect;
 
     [Header("Ilość graczy")]
     public PlayerQuantity playerQuantity;
@@ -54,6 +55,7 @@ public class WaveManager : MonoBehaviour
     void Start()
     {
         shopUI.SetActive(false);
+        cursorRect.gameObject.SetActive(false);
         if (waveUI != null)
             waveUI.UpdateWaveTimer(20);
         StartNextWave();
@@ -139,6 +141,7 @@ public class WaveManager : MonoBehaviour
     {
         isWaveActive = true;
         shopUI.SetActive(false);
+        cursorRect.gameObject.SetActive(false);
         RevivePlayersForNewWave();
 
 
@@ -194,6 +197,7 @@ public class WaveManager : MonoBehaviour
         GiveKaska();
         isWaveActive = false;
         shopUI.SetActive(true);
+        cursorRect.gameObject.SetActive(true);
         SetPlayerInterfacesActive(false);
         UpdatePlayerMoneyTexts();
         ShopMenager.Roll();
